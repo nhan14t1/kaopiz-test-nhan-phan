@@ -9,7 +9,5 @@ namespace KAOPIZ.Common.Models.Requests
 
         [Required]
         public string Password { get; set; } = string.Empty;
-
-        public bool RememberMe { get; set; } = false;
     }
 }
