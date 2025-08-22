@@ -7,6 +7,7 @@ namespace KAOPIZ.Common.Interfaces
     public interface IAuthService
     {
         Task<UserResponse> LoginAsync(LoginRequest request);
+        Task<string> RefreshTokenAsync(RefreshTokenRequest request);
         Task RegisterAsync(RegisterRequest request);
     }
 }

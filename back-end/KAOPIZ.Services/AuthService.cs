@@ -86,5 +86,12 @@ namespace KAOPIZ.Services
                 throw new InvalidOperationException("User already exists");
             }
         }
+
+        public async Task<string> RefreshTokenAsync(RefreshTokenRequest request)
+        {
+            await Task.Delay(10); // Simulate async operation
+            var jwtResult = _jwtProvider.Refresh(request.AccessToken, DateTime.UtcNow);
+            return jwtResult.AccessToken;
+        }
     }
 }

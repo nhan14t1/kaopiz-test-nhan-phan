@@ -1,7 +1,10 @@
 ﻿using KAOPIZ.Common.Interfaces;
 using KAOPIZ.Common.Models;
 using KAOPIZ.Common.Models.Requests;
+using KAOPIZ.Common.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace KAOPIZ.WebAPI.Controllers
 {
@@ -37,6 +40,32 @@ namespace KAOPIZ.WebAPI.Controllers
 
             var res = await _authService.LoginAsync(request);
             return Ok(res);
+        }
+
+        [HttpGet("test-data")]
+        [Authorize(Roles = "Admin, Partner, User")]
+        public async Task<IActionResult> TestData()
+        {
+            await Task.Delay(10); // Simulate async operation
+            return Ok("Ok");
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            try
+            {
+                var accessToken = await _authService.RefreshTokenAsync(request);
+
+                return Ok(new UserResponse
+                {
+                    AccessToken = accessToken,
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                return Unauthorized(e.Message);
+            }
         }
     }
 }
