@@ -120,13 +120,13 @@ const handleError = (error, config) => {
     // Clear cache
     // Remove old access token if have
     const hasAccessToken = !!getAccessToken();
-    // removeStoreLoggedUser();
+    removeStoreLoggedUser();
 
     if (!skipAuthRedirect) {
       setTimeout(() => {
         // Navigate to login page
         const currentPath = window.location.pathname;
-        // window.location.href = window.location.origin + `/login?redirect=${currentPath}`;
+        window.location.href = window.location.origin + `/login?redirect=${currentPath}`;
       }, 2000);
     }
     
